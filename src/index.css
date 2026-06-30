@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* ── Xenith brand fonts ─────────────────────────────────────────────── */
+@font-face {
+  font-family: "Chomsky";
+  src: url("/fonts/Chomsky.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Xenith design tokens (dark — mirrors the web app) ──────────────── */
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-card: #161616;
+  --color-elevated: #1f1f1f;
+  --color-border: #262626;
+  --color-muted: #a3a3a3;
+  --color-subtle: #6a6a6a;
+
+  /* Status palette — drawn from Xenith dimension colors */
+  --color-operational: #22c55e;
+  --color-degraded: #eab308;
+  --color-partial: #f97316;
+  --color-major: #ef4444;
+  --color-maintenance: #3b82f6;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-chomsky: "Chomsky", serif;
+
+  --radius-xl: 0.75rem;
+}
+
+html {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(250, 250, 250, 0.16);
+}
