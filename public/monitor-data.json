@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-06-30T23:10:50.687Z",
+  "components": {
+    "app": {
+      "status": "operational",
+      "latencyMs": 194,
+      "lastChecked": "2026-06-30T23:10:50.404Z",
+      "days": [
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "checks": 1,
+          "down": 0,
+          "uptime": 100
+        }
+      ]
+    },
+    "auth": {
+      "status": "operational",
+      "latencyMs": 113,
+      "lastChecked": "2026-06-30T23:10:50.518Z",
+      "days": [
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "checks": 1,
+          "down": 0,
+          "uptime": 100
+        }
+      ]
+    },
+    "database": {
+      "status": "operational",
+      "latencyMs": 75,
+      "lastChecked": "2026-06-30T23:10:50.593Z",
+      "days": [
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "checks": 1,
+          "down": 0,
+          "uptime": 100
+        }
+      ]
+    },
+    "media": {
+      "status": "operational",
+      "latencyMs": 94,
+      "lastChecked": "2026-06-30T23:10:50.687Z",
+      "days": [
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "checks": 1,
+          "down": 0,
+          "uptime": 100
+        }
+      ]
+    }
+  }
+}

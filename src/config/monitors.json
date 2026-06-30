@@ -1,0 +1,26 @@
+{
+  "//": "Endpoints probed by scripts/check-uptime.mjs on a schedule. Each id must match a component id in src/config/status.ts. Components without a monitor here keep the manual status set in status.ts.",
+  "degradedAfterMs": 1500,
+  "timeoutMs": 10000,
+  "monitors": [
+    {
+      "id": "app",
+      "url": "https://xenith.life"
+    },
+    {
+      "id": "auth",
+      "url": "https://jdqoxirpbyclytligjiu.supabase.co/auth/v1/health",
+      "anyResponseIsUp": true
+    },
+    {
+      "id": "database",
+      "url": "https://jdqoxirpbyclytligjiu.supabase.co/rest/v1/",
+      "anyResponseIsUp": true
+    },
+    {
+      "id": "media",
+      "url": "https://audio.xenith.life/rain.mp3",
+      "method": "HEAD"
+    }
+  ]
+}

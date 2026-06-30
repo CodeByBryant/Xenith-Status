@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Xenith Support
+    url: mailto:support@xenith.life
+    about: Account help or questions not about an outage.
+  - name: Open the App
+    url: https://xenith.life
+    about: Go to the Xenith web app.

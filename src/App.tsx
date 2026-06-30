@@ -4,10 +4,20 @@ import { IncidentHistory } from "./components/IncidentHistory";
 import { Logo } from "./components/Logo";
 import { OverallBanner } from "./components/OverallBanner";
 import { COMPONENTS, INCIDENTS, MAINTENANCE, SITE } from "./config/status";
+import { useMonitorData } from "./hooks/useMonitorData";
 import { overallStatus } from "./lib/status";
 
 function App() {
-  const status = overallStatus(COMPONENTS);
+  const live = useMonitorData();
+
+  // Live measurements override the manual status for any monitored component;
+  // components without a monitor keep the status set in config/status.ts.
+  const components = COMPONENTS.map((c) => {
+    const measured = live?.components[c.id];
+    return measured ? { ...c, status: measured.status } : c;
+  });
+
+  const status = overallStatus(components);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 py-8 sm:py-12">
@@ -22,7 +32,7 @@ function App() {
       </header>
 
       <main className="flex-1 space-y-10">
-        <OverallBanner status={status} updatedAt={__BUILD_TIME__} />
+        <OverallBanner status={status} updatedAt={live?.generatedAt || __BUILD_TIME__} />
 
         {MAINTENANCE.length > 0 && (
           <section>
@@ -51,7 +61,7 @@ function App() {
           </section>
         )}
 
-        <ComponentList components={COMPONENTS} />
+        <ComponentList components={components} live={live} />
         <IncidentHistory incidents={INCIDENTS} />
       </main>
 
