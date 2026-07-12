@@ -32,13 +32,21 @@ async function probe(mon, cfg) {
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   const started = Date.now();
   try {
+    // authEnvVar lets a monitor require a bearer secret without ever putting
+    // the secret itself in this (public) repo — only the env var *name* is
+    // committed; the value lives in this workflow's own repo secrets.
+    const headers = { "user-agent": "xenith-status-bot/1.0 (+https://status.xenith.life)" };
+    if (mon.authEnvVar) {
+      const secret = process.env[mon.authEnvVar];
+      if (!secret) throw new Error(`Missing env var ${mon.authEnvVar} for monitor "${mon.id}"`);
+      headers.authorization = `Bearer ${secret}`;
+    }
+
     const res = await fetch(mon.url, {
       method: mon.method ?? "GET",
       redirect: "follow",
       signal: controller.signal,
-      headers: {
-        "user-agent": "xenith-status-bot/1.0 (+https://status.xenith.life)",
-      },
+      headers,
     });
     const ms = Date.now() - started;
     const code = res.status;

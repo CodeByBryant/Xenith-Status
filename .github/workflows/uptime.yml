@@ -24,6 +24,8 @@ jobs:
           node-version: 20
 
       - name: Run uptime checks
+        env:
+          STATUS_CHECK_SECRET: ${{ secrets.STATUS_CHECK_SECRET }}
         run: node scripts/check-uptime.mjs
 
       - name: Commit updated status data

@@ -21,6 +21,11 @@
       "id": "media",
       "url": "https://audio.xenith.life/rain.mp3",
       "method": "HEAD"
+    },
+    {
+      "id": "api",
+      "url": "https://xenith.life/api/v1/health",
+      "authEnvVar": "STATUS_CHECK_SECRET"
     }
   ]
 }

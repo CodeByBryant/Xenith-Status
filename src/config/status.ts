@@ -63,6 +63,12 @@ export const COMPONENTS: ServiceComponent[] = [
     description: "Ambient sound delivery for the Focus timer.",
     status: "operational",
   },
+  {
+    id: "api",
+    name: "Public API",
+    description: "The public API (api/v1) used by integrations and API keys.",
+    status: "operational",
+  },
 ];
 
 // ── Active / past incidents (newest activity is sorted automatically) ─
