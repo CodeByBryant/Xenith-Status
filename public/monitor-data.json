@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-13T15:57:04.990Z",
+  "generatedAt": "2026-07-13T18:01:25.398Z",
   "components": {
     "app": {
       "status": "operational",
-      "latencyMs": 123,
-      "lastChecked": "2026-07-13T15:57:01.149Z",
+      "latencyMs": 257,
+      "lastChecked": "2026-07-13T18:01:23.107Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -100,7 +100,7 @@
         {
           "date": "2026-07-13",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -108,8 +108,8 @@
     },
     "auth": {
       "status": "operational",
-      "latencyMs": 129,
-      "lastChecked": "2026-07-13T15:57:01.292Z",
+      "latencyMs": 77,
+      "lastChecked": "2026-07-13T18:01:23.192Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -205,7 +205,7 @@
         {
           "date": "2026-07-13",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -213,8 +213,8 @@
     },
     "database": {
       "status": "operational",
-      "latencyMs": 44,
-      "lastChecked": "2026-07-13T15:57:01.336Z",
+      "latencyMs": 176,
+      "lastChecked": "2026-07-13T18:01:23.368Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -310,7 +310,7 @@
         {
           "date": "2026-07-13",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -318,8 +318,8 @@
     },
     "media": {
       "status": "operational",
-      "latencyMs": 278,
-      "lastChecked": "2026-07-13T15:57:01.614Z",
+      "latencyMs": 461,
+      "lastChecked": "2026-07-13T18:01:23.830Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -415,16 +415,16 @@
         {
           "date": "2026-07-13",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
       ]
     },
     "api": {
-      "status": "degraded",
-      "latencyMs": 3376,
-      "lastChecked": "2026-07-13T15:57:04.990Z",
+      "status": "major",
+      "latencyMs": 1568,
+      "lastChecked": "2026-07-13T18:01:25.398Z",
       "days": [
         {
           "date": "2026-07-12",
@@ -435,10 +435,10 @@
         },
         {
           "date": "2026-07-13",
-          "status": "degraded",
-          "checks": 5,
-          "down": 0,
-          "uptime": 100
+          "status": "major",
+          "checks": 6,
+          "down": 1,
+          "uptime": 83.33
         }
       ]
     }
