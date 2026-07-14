@@ -73,6 +73,34 @@ export const COMPONENTS: ServiceComponent[] = [
 
 // ── Active / past incidents (newest activity is sorted automatically) ─
 export const INCIDENTS: Incident[] = [
+  {
+    id: "2026-07-14-api-waf-block",
+    title: "Public API blocked for non-browser clients",
+    severity: "major",
+    affected: ["api"],
+    updates: [
+      {
+        at: "2026-07-14T02:00:00Z",
+        stage: "investigating",
+        body: "We're investigating reports that api.xenith.life/api/v1 endpoints, including the health check, are unreachable.",
+      },
+      {
+        at: "2026-07-14T02:20:00Z",
+        stage: "identified",
+        body: "Identified the cause: an edge firewall rule intended to block scanner traffic was blocking any request with a curl/wget/python User-Agent — which is also the normal signature of legitimate API clients (scripts, integrations, our own health check) — across the entire site.",
+      },
+      {
+        at: "2026-07-14T02:35:00Z",
+        stage: "monitoring",
+        body: "Scoped the rule to exempt /api/v1/* while keeping it in place elsewhere. Separately found that our own health check's self-test was being blocked for a different reason (our server's outbound requests were flagged by bot-detection independent of the fix above) and moved that check in-process so it no longer depends on the edge at all. Monitoring after re-enabling full edge protection on all subdomains.",
+      },
+      {
+        at: "2026-07-14T03:05:00Z",
+        stage: "resolved",
+        body: "Verified working end-to-end: the public API is reachable for real clients (including curl/scripts) at /api/v1/*, the health check passes, and every subdomain has normal edge protection restored. No user data was affected.",
+      },
+    ],
+  },
   // Example of a resolved incident — delete or keep as a template.
   {
     id: "2026-06-21-auth-latency",
