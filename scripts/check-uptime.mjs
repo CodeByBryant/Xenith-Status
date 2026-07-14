@@ -35,7 +35,13 @@ async function probe(mon, cfg) {
     // authEnvVar lets a monitor require a bearer secret without ever putting
     // the secret itself in this (public) repo — only the env var *name* is
     // committed; the value lives in this workflow's own repo secrets.
-    const headers = { "user-agent": "xenith-status-bot/1.0 (+https://status.xenith.life)" };
+    // mon.headers is for static, non-secret values (e.g. Supabase's public
+    // anon key, already shipped in Xenith-Web's client bundle) that are fine
+    // to commit directly.
+    const headers = {
+      "user-agent": "xenith-status-bot/1.0 (+https://status.xenith.life)",
+      ...mon.headers,
+    };
     if (mon.authEnvVar) {
       const secret = process.env[mon.authEnvVar];
       if (!secret) throw new Error(`Missing env var ${mon.authEnvVar} for monitor "${mon.id}"`);
@@ -50,19 +56,80 @@ async function probe(mon, cfg) {
     });
     const ms = Date.now() - started;
     const code = res.status;
-    const ok = mon.anyResponseIsUp
+    let ok = mon.anyResponseIsUp
       ? code < 500
       : (mon.healthyStatuses?.includes(code) ?? (code >= 200 && code < 400));
+
+    // A 2xx doesn't prove the page/endpoint actually rendered/behaved
+    // correctly — e.g. a broken build can still serve a 200 error page.
+    // bodyContains asserts on real content, not just the status code.
+    let detail = String(code);
+    if (ok && mon.bodyContains) {
+      const text = await res.text();
+      const hasMarker = text.includes(mon.bodyContains);
+      if (!hasMarker) {
+        ok = false;
+        detail = `${code} (missing "${mon.bodyContains}")`;
+      }
+    }
 
     let level;
     if (!ok) level = code >= 500 ? "major" : "degraded";
     else level = ms > degradedAfterMs ? "degraded" : "operational";
 
-    return { level, ms, detail: String(code) };
+    return { level, ms, detail };
   } catch (err) {
     return { level: "major", ms: null, detail: err?.name === "AbortError" ? "timeout" : "unreachable" };
   } finally {
     clearTimeout(timer);
+  }
+}
+
+// Sentry-based check — for subsystems (AI, notifications) where a synthetic
+// HTTP probe would either cost real money every run (calling a real LLM) or
+// be intrusive (sending a real push/email every 15 minutes forever). Real
+// usage already generates the signal via logger.error()'s "area" tag
+// (lib/logger.ts in Xenith-Web) — this just asks Sentry how many distinct
+// issues tagged with that area have fired recently, rather than manufacturing
+// synthetic traffic.
+async function probeSentry(mon) {
+  const started = Date.now();
+  try {
+    const org = process.env.SENTRY_ORG;
+    const project = process.env.SENTRY_PROJECT;
+    const token = process.env.SENTRY_API_TOKEN;
+    if (!org || !project || !token) {
+      throw new Error("Missing SENTRY_ORG/SENTRY_PROJECT/SENTRY_API_TOKEN env var");
+    }
+
+    const statsPeriod = mon.statsPeriod ?? "15m";
+    const query = `${mon.sentryQuery} lastSeen:-${statsPeriod}`;
+    const url = `https://sentry.io/api/0/projects/${org}/${project}/issues/?query=${encodeURIComponent(query)}&statsPeriod=${statsPeriod}`;
+
+    const res = await fetch(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+        "user-agent": "xenith-status-bot/1.0 (+https://status.xenith.life)",
+      },
+    });
+    const ms = Date.now() - started;
+    if (!res.ok) throw new Error(`Sentry API returned ${res.status}`);
+
+    const issues = await res.json();
+    const count = Array.isArray(issues) ? issues.length : 0;
+    const degradedAt = mon.degradedAtIssues ?? 1;
+    const majorAt = mon.majorAtIssues ?? 3;
+
+    let level = "operational";
+    if (count >= majorAt) level = "major";
+    else if (count >= degradedAt) level = "degraded";
+
+    return { level, ms, detail: `${count} recent issue${count === 1 ? "" : "s"}` };
+  } catch (err) {
+    // A Sentry API failure means we couldn't ask, not that the subsystem
+    // itself is down — report degraded (visible) rather than major (which
+    // would falsely read as a real outage).
+    return { level: "degraded", ms: null, detail: `sentry check failed: ${err?.message ?? "unknown"}` };
   }
 }
 
@@ -76,7 +143,7 @@ async function main() {
   const today = utcDay();
 
   for (const mon of cfg.monitors) {
-    const r = await probe(mon, cfg);
+    const r = mon.kind === "sentry" ? await probeSentry(mon) : await probe(mon, cfg);
     const comp =
       data.components[mon.id] ??
       { status: "operational", latencyMs: null, lastChecked: "", days: [] };

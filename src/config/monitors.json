@@ -1,21 +1,27 @@
 {
   "//": "Endpoints probed by scripts/check-uptime.mjs on a schedule. Each id must match a component id in src/config/status.ts. Components without a monitor here keep the manual status set in status.ts.",
+  "//supabaseKey": "The apikey values below are Supabase's public *publishable* key (sb_publishable_...) — the same one already shipped in Xenith-Web's client bundle, safe to commit here. Never put a secret/service-role key in this file.",
   "degradedAfterMs": 1500,
   "timeoutMs": 10000,
   "monitors": [
     {
       "id": "app",
-      "url": "https://xenith.life"
+      "url": "https://xenith.life",
+      "bodyContains": "Xenith"
     },
     {
       "id": "auth",
       "url": "https://jdqoxirpbyclytligjiu.supabase.co/auth/v1/health",
-      "anyResponseIsUp": true
+      "headers": { "apikey": "sb_publishable_Y1ZBtT8Dq3uVLh-teqIsZQ_V0kL7Ja8" },
+      "bodyContains": "GoTrue"
     },
     {
       "id": "database",
-      "url": "https://jdqoxirpbyclytligjiu.supabase.co/rest/v1/",
-      "anyResponseIsUp": true
+      "url": "https://jdqoxirpbyclytligjiu.supabase.co/rest/v1/profiles?select=id&limit=1",
+      "headers": {
+        "apikey": "sb_publishable_Y1ZBtT8Dq3uVLh-teqIsZQ_V0kL7Ja8",
+        "authorization": "Bearer sb_publishable_Y1ZBtT8Dq3uVLh-teqIsZQ_V0kL7Ja8"
+      }
     },
     {
       "id": "media",
@@ -26,6 +32,22 @@
       "id": "api",
       "url": "https://xenith.life/api/v1/health",
       "authEnvVar": "STATUS_CHECK_SECRET"
+    },
+    {
+      "id": "ai",
+      "kind": "sentry",
+      "sentryQuery": "area:ai",
+      "statsPeriod": "15m",
+      "degradedAtIssues": 1,
+      "majorAtIssues": 3
+    },
+    {
+      "id": "notifications",
+      "kind": "sentry",
+      "sentryQuery": "area:notifications",
+      "statsPeriod": "15m",
+      "degradedAtIssues": 1,
+      "majorAtIssues": 3
     }
   ]
 }
