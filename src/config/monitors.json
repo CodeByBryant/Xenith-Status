@@ -1,7 +1,7 @@
 {
   "//": "Endpoints probed by scripts/check-uptime.mjs on a schedule. Each id must match a component id in src/config/status.ts. Components without a monitor here keep the manual status set in status.ts.",
   "//supabaseKey": "The apikey values below are Supabase's public *publishable* key (sb_publishable_...) — the same one already shipped in Xenith-Web's client bundle, safe to commit here. Never put a secret/service-role key in this file.",
-  "degradedAfterMs": 1500,
+  "degradedAfterMs": 2000,
   "timeoutMs": 10000,
   "monitors": [
     {
@@ -25,7 +25,12 @@
     },
     {
       "id": "media",
-      "url": "https://audio.xenith.life/rain.mp3",
+      "urls": [
+        "https://audio.xenith.life/rain.mp3",
+        "https://audio.xenith.life/rain-thunder.mp3",
+        "https://audio.xenith.life/lofi1.mp3",
+        "https://audio.xenith.life/lofi2.mp3"
+      ],
       "method": "HEAD"
     },
     {

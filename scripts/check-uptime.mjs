@@ -25,7 +25,7 @@ const isDown = (level) => level === "major" || level === "partial";
 
 const utcDay = (d = new Date()) => d.toISOString().slice(0, 10);
 
-async function probe(mon, cfg) {
+async function probeOne(url, mon, cfg) {
   const timeoutMs = cfg.timeoutMs ?? 10000;
   const degradedAfterMs = mon.degradedAfterMs ?? cfg.degradedAfterMs ?? 1500;
   const controller = new AbortController();
@@ -48,7 +48,7 @@ async function probe(mon, cfg) {
       headers.authorization = `Bearer ${secret}`;
     }
 
-    const res = await fetch(mon.url, {
+    const res = await fetch(url, {
       method: mon.method ?? "GET",
       redirect: "follow",
       signal: controller.signal,
@@ -83,6 +83,27 @@ async function probe(mon, cfg) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+// A monitor with `urls` (rather than a single `url`) probes every entry and
+// rolls the results up to one worst-case status — e.g. the "media" monitor
+// checking each ambient-sound mp3 under audio.xenith.life so a single dead
+// track shows as degraded/major instead of being masked by the others.
+async function probe(mon, cfg) {
+  const urls = mon.urls ?? [mon.url];
+  const results = await Promise.all(urls.map((url) => probeOne(url, mon, cfg)));
+  if (urls.length === 1) return results[0];
+
+  const level = results.reduce((acc, r) => worst(acc, r.level), "operational");
+  const ms = Math.max(...results.map((r) => r.ms ?? 0)) || null;
+  const failing = results
+    .map((r, i) => ({ url: urls[i], r }))
+    .filter(({ r }) => r.level !== "operational");
+  const detail = failing.length
+    ? `${failing.length}/${urls.length} failing: ${failing.map(({ url }) => url.split("/").pop()).join(", ")}`
+    : `${urls.length}/${urls.length} ok`;
+
+  return { level, ms, detail };
 }
 
 // Sentry-based check — for subsystems (AI, notifications) where a synthetic
