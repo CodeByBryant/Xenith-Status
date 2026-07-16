@@ -36,7 +36,9 @@
     {
       "id": "api",
       "url": "https://xenith.life/api/v1/health",
-      "authEnvVar": "STATUS_CHECK_SECRET"
+      "authEnvVar": "STATUS_CHECK_SECRET",
+      "//": "Higher than the 2000ms default — this endpoint is hit by a bot every 15 minutes, not a real user waiting on a response, and Vercel cold starts routinely land in the 1.5-2.5s range. The default threshold was marking whole days 'degraded' on a single cold start.",
+      "degradedAfterMs": 5000
     },
     {
       "id": "ai",
