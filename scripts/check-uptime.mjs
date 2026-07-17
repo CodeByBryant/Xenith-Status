@@ -123,9 +123,12 @@ async function probeSentry(mon) {
       throw new Error("Missing SENTRY_ORG/SENTRY_PROJECT/SENTRY_API_TOKEN env var");
     }
 
-    const statsPeriod = mon.statsPeriod ?? "15m";
-    const query = `${mon.sentryQuery} lastSeen:-${statsPeriod}`;
-    const url = `https://sentry.io/api/0/projects/${org}/${project}/issues/?query=${encodeURIComponent(query)}&statsPeriod=${statsPeriod}`;
+    const lookback = mon.statsPeriod ?? "15m";
+    const query = `${mon.sentryQuery} lastSeen:-${lookback}`;
+    // statsPeriod here controls Sentry's own stats window, not our lookback —
+    // it only accepts "24h", "14d", or "" (disabled). Our actual time window
+    // is scoped via lastSeen in the query string above.
+    const url = `https://sentry.io/api/0/projects/${org}/${project}/issues/?query=${encodeURIComponent(query)}&statsPeriod=`;
 
     const res = await fetch(url, {
       headers: {
