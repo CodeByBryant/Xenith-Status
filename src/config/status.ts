@@ -69,6 +69,12 @@ export const COMPONENTS: ServiceComponent[] = [
     description: "The public API (api/v1) used by integrations and API keys.",
     status: "operational",
   },
+  {
+    id: "billing",
+    name: "Billing",
+    description: "Stripe checkout and subscription management.",
+    status: "operational",
+  },
 ];
 
 // ── Active / past incidents (newest activity is sorted automatically) ─

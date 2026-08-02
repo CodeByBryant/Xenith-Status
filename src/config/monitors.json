@@ -41,6 +41,13 @@
       "degradedAfterMs": 5000
     },
     {
+      "id": "billing",
+      "url": "https://xenith.life/api/stripe/health",
+      "authEnvVar": "STATUS_CHECK_SECRET",
+      "//": "Confirms STRIPE_SECRET_KEY is valid, Stripe's API is reachable, and the two subscription prices checkout uses still exist and are active. Same cold-start reasoning as 'api' above.",
+      "degradedAfterMs": 5000
+    },
+    {
       "id": "ai",
       "kind": "sentry",
       "sentryQuery": "area:ai",
