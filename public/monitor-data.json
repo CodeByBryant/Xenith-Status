@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-06T17:04:28.063Z",
+  "generatedAt": "2026-09-06T19:12:12.634Z",
   "components": {
     "app": {
       "status": "operational",
-      "latencyMs": 442,
-      "lastChecked": "2026-09-06T17:04:24.296Z",
+      "latencyMs": 341,
+      "lastChecked": "2026-09-06T19:12:08.916Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -485,7 +485,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -493,8 +493,8 @@
     },
     "auth": {
       "status": "operational",
-      "latencyMs": 434,
-      "lastChecked": "2026-09-06T17:04:24.746Z",
+      "latencyMs": 378,
+      "lastChecked": "2026-09-06T19:12:09.303Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -975,7 +975,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -983,8 +983,8 @@
     },
     "database": {
       "status": "operational",
-      "latencyMs": 673,
-      "lastChecked": "2026-09-06T17:04:25.420Z",
+      "latencyMs": 510,
+      "lastChecked": "2026-09-06T19:12:09.813Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -1465,7 +1465,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -1473,8 +1473,8 @@
     },
     "media": {
       "status": "operational",
-      "latencyMs": 702,
-      "lastChecked": "2026-09-06T17:04:26.125Z",
+      "latencyMs": 166,
+      "lastChecked": "2026-09-06T19:12:09.980Z",
       "days": [
         {
           "date": "2026-06-30",
@@ -1955,7 +1955,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -1963,8 +1963,8 @@
     },
     "api": {
       "status": "operational",
-      "latencyMs": 489,
-      "lastChecked": "2026-09-06T17:04:26.614Z",
+      "latencyMs": 1472,
+      "lastChecked": "2026-09-06T19:12:11.452Z",
       "days": [
         {
           "date": "2026-07-12",
@@ -2361,7 +2361,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -2369,8 +2369,8 @@
     },
     "ai": {
       "status": "operational",
-      "latencyMs": 453,
-      "lastChecked": "2026-09-06T17:04:27.500Z",
+      "latencyMs": 448,
+      "lastChecked": "2026-09-06T19:12:12.334Z",
       "days": [
         {
           "date": "2026-07-14",
@@ -2753,7 +2753,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -2761,8 +2761,8 @@
     },
     "notifications": {
       "status": "operational",
-      "latencyMs": 562,
-      "lastChecked": "2026-09-06T17:04:28.063Z",
+      "latencyMs": 300,
+      "lastChecked": "2026-09-06T19:12:12.634Z",
       "days": [
         {
           "date": "2026-07-14",
@@ -3145,7 +3145,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
@@ -3154,7 +3154,7 @@
     "billing": {
       "status": "operational",
       "latencyMs": 432,
-      "lastChecked": "2026-09-06T17:04:27.047Z",
+      "lastChecked": "2026-09-06T19:12:11.884Z",
       "days": [
         {
           "date": "2026-08-02",
@@ -3404,7 +3404,7 @@
         {
           "date": "2026-09-06",
           "status": "operational",
-          "checks": 5,
+          "checks": 6,
           "down": 0,
           "uptime": 100
         }
