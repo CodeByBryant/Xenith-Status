@@ -6,7 +6,9 @@ export type StatusLevel =
   | "degraded"
   | "partial"
   | "major"
-  | "maintenance";
+  | "maintenance"
+  /** No trustworthy monitoring data -- never rendered as operational. */
+  | "unknown";
 
 export type IncidentStage =
   | "investigating"
@@ -68,6 +70,7 @@ export const STATUS_META: Record<StatusLevel, StatusMeta> = {
   partial:     { label: "Partial Outage",  color: "var(--color-partial)",     text: "text-partial",      bg: "bg-partial" },
   major:       { label: "Major Outage",    color: "var(--color-major)",       text: "text-major",        bg: "bg-major" },
   maintenance: { label: "Maintenance",     color: "var(--color-maintenance)", text: "text-maintenance",  bg: "bg-maintenance" },
+  unknown:     { label: "Unknown",         color: "var(--color-unknown)",     text: "text-unknown",      bg: "bg-unknown" },
 };
 
 export const STAGE_LABEL: Record<IncidentStage, string> = {
@@ -83,6 +86,7 @@ const SEVERITY_ORDER: StatusLevel[] = [
   "partial",
   "degraded",
   "maintenance",
+  "unknown",
   "operational",
 ];
 
@@ -102,6 +106,7 @@ export function overallHeadline(level: StatusLevel): string {
     case "partial":     return "Partial System Outage";
     case "major":       return "Major System Outage";
     case "maintenance": return "Under Maintenance";
+    case "unknown":     return "Status Unknown";
   }
 }
 

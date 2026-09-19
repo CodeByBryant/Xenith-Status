@@ -8,11 +8,17 @@ import { useMonitorData } from "./hooks/useMonitorData";
 import { overallStatus } from "./lib/status";
 
 function App() {
-  const live = useMonitorData();
+  const { data: live, loading, unavailable, lastSuccessfulCheck } = useMonitorData();
 
-  // Live measurements override the manual status for any monitored component;
-  // components without a monitor keep the status set in config/status.ts.
+  // Live measurements override the manual status for any monitored component.
+  // With no trustworthy data (fetch failed / stale / still loading) nothing
+  // can be claimed as operational, so those components show "unknown"; a
+  // manually-set incident status in config/status.ts still wins.
+  const monitoringDown = loading || unavailable;
   const components = COMPONENTS.map((c) => {
+    if (monitoringDown) {
+      return c.status === "operational" ? { ...c, status: "unknown" as const } : c;
+    }
     const measured = live?.components[c.id];
     return measured ? { ...c, status: measured.status } : c;
   });
@@ -32,7 +38,12 @@ function App() {
       </header>
 
       <main className="flex-1 space-y-10">
-        <OverallBanner status={status} updatedAt={live?.generatedAt || __BUILD_TIME__} />
+        <OverallBanner
+          status={status}
+          updatedAt={live?.generatedAt ?? __BUILD_TIME__}
+          monitoring={loading ? "loading" : unavailable ? "unavailable" : "ok"}
+          lastSuccessfulCheck={lastSuccessfulCheck}
+        />
 
         {MAINTENANCE.length > 0 && (
           <section>
@@ -61,7 +72,7 @@ function App() {
           </section>
         )}
 
-        <ComponentList components={components} live={live} />
+        <ComponentList components={components} live={live} monitoringDown={monitoringDown} />
         <IncidentHistory incidents={INCIDENTS} />
       </main>
 

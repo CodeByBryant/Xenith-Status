@@ -34,3 +34,12 @@ export interface MonitorData {
   /** Keyed by component id (matching src/config/status.ts). */
   components: Record<string, MonitorComponent>;
 }
+
+/** Checks run every 15 minutes; data older than this means monitoring is
+ * not running, so the page must not claim anything about current health. */
+export const MONITOR_STALE_MS = 45 * 60 * 1000;
+
+export function isMonitorDataStale(data: MonitorData, now: number = Date.now()): boolean {
+  const generated = new Date(data.generatedAt).getTime();
+  return Number.isNaN(generated) || now - generated > MONITOR_STALE_MS;
+}

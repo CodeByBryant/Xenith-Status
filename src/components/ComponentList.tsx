@@ -54,6 +54,7 @@ function incidentHistory(componentId: string): { days: BarDay[]; pct: string } {
     degraded: 2,
     partial: 3,
     major: 4,
+    unknown: 0,
   };
 
   for (const inc of INCIDENTS) {
@@ -74,6 +75,15 @@ function incidentHistory(componentId: string): { days: BarDay[]; pct: string } {
   const operational = days.filter((d) => d.status === "operational").length;
   const pct = ((operational / days.length) * 100).toFixed(2);
   return { days, pct };
+}
+
+function noDataHistory(): { days: BarDay[]; pct: string } {
+  const today = new Date();
+  const days: BarDay[] = [];
+  for (let i = SITE.uptimeWindowDays - 1; i >= 0; i--) {
+    days.push({ date: new Date(today.getTime() - i * DAY_MS), status: "nodata" });
+  }
+  return { days, pct: "—" };
 }
 
 function barStyle(status: BarDay["status"]): CSSProperties {
@@ -120,12 +130,19 @@ function UptimeBar({ days, pct }: { days: BarDay[]; pct: string }) {
 function ComponentRow({
   component,
   live,
+  monitoringDown,
 }: {
   component: ServiceComponent;
   live?: MonitorComponent;
+  monitoringDown: boolean;
 }) {
   const meta = STATUS_META[component.status];
-  const { days, pct } = live ? measuredHistory(live) : incidentHistory(component.id);
+  // Without trustworthy monitoring data, don't draw a green uptime history.
+  const { days, pct } = monitoringDown
+    ? noDataHistory()
+    : live
+      ? measuredHistory(live)
+      : incidentHistory(component.id);
 
   return (
     <div className="border-b border-border px-4 py-4 last:border-b-0 sm:px-5">
@@ -150,9 +167,11 @@ function ComponentRow({
 export function ComponentList({
   components,
   live,
+  monitoringDown,
 }: {
   components: ServiceComponent[];
   live: MonitorData | null;
+  monitoringDown: boolean;
 }) {
   return (
     <section>
@@ -161,7 +180,12 @@ export function ComponentList({
       </h2>
       <div className="overflow-hidden rounded-xl border border-border bg-card">
         {components.map((c) => (
-          <ComponentRow key={c.id} component={c} live={live?.components[c.id]} />
+          <ComponentRow
+            key={c.id}
+            component={c}
+            live={live?.components[c.id]}
+            monitoringDown={monitoringDown}
+          />
         ))}
       </div>
     </section>

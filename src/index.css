@@ -25,6 +25,7 @@
   --color-partial: #f97316;
   --color-major: #ef4444;
   --color-maintenance: #3b82f6;
+  --color-unknown: #6b7280;
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Playfair Display", Georgia, serif;

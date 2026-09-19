@@ -8,10 +8,22 @@ interface Props {
   status: StatusLevel;
   /** ISO timestamp of the last data update. */
   updatedAt: string;
+  monitoring: "loading" | "unavailable" | "ok";
+  /** ISO time of the last successful monitoring check, if known. */
+  lastSuccessfulCheck: string | null;
+}
+
+function pacific(iso: string): string {
+  return new Date(iso).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/Los_Angeles",
+    timeZoneName: "short",
+  });
 }
 
 /** The large hero banner: overall system status + last-updated time. */
-export function OverallBanner({ status, updatedAt }: Props) {
+export function OverallBanner({ status, updatedAt, monitoring, lastSuccessfulCheck }: Props) {
   const meta = STATUS_META[status];
   const ok = status === "operational";
 
@@ -41,11 +53,24 @@ export function OverallBanner({ status, updatedAt }: Props) {
         </h1>
       </div>
       <p className="mt-2 pl-[1.875rem] text-sm text-muted">
-        Last updated{" "}
-        {new Date(updatedAt).toLocaleString(undefined, {
-          dateStyle: "medium",
-          timeStyle: "short",
-        })}
+        {monitoring === "loading" ? (
+          "Checking monitoring data…"
+        ) : monitoring === "unavailable" ? (
+          <>
+            Monitoring data unavailable.{" "}
+            {lastSuccessfulCheck
+              ? `Last successful check: ${pacific(lastSuccessfulCheck)}.`
+              : "No successful check on record."}
+          </>
+        ) : (
+          <>
+            Last updated{" "}
+            {new Date(updatedAt).toLocaleString(undefined, {
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}
+          </>
+        )}
       </p>
     </section>
   );
