@@ -35,9 +35,12 @@ export interface MonitorData {
   components: Record<string, MonitorComponent>;
 }
 
-/** Checks run every 15 minutes; data older than this means monitoring is
- * not running, so the page must not claim anything about current health. */
-export const MONITOR_STALE_MS = 45 * 60 * 1000;
+/** Checks are scheduled every 15 minutes, but GitHub throttles scheduled
+ * workflows hard: real commit gaps run 3-10 hours. A 45 min cutoff made the
+ * page show "No data" nearly all the time, so allow 12 hours. Data older than
+ * this means monitoring is genuinely not running, so the page must not claim
+ * anything about current health. The banner always shows the check's age. */
+export const MONITOR_STALE_MS = 12 * 60 * 60 * 1000;
 
 export function isMonitorDataStale(data: MonitorData, now: number = Date.now()): boolean {
   const generated = new Date(data.generatedAt).getTime();

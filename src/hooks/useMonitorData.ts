@@ -20,7 +20,7 @@ export interface MonitorState {
   data: MonitorData | null;
   /** True until the first fetch settles. */
   loading: boolean;
-  /** True when the fetch failed or the data is older than 45 minutes. */
+  /** True when the fetch failed or the data is older than MONITOR_STALE_MS. */
   unavailable: boolean;
   /** ISO time of the last successful check this browser has seen. */
   lastSuccessfulCheck: string | null;
