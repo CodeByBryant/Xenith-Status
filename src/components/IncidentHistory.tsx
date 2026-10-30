@@ -70,8 +70,8 @@ export function IncidentHistory({ incidents }: { incidents: Incident[] }) {
 
   return (
     <section>
-      <h2 className="mb-3 px-1 text-sm font-semibold uppercase tracking-wider text-subtle">
-        Incident History
+      <h2 className="mb-3 px-1 text-[0.8125rem] font-medium text-muted">
+        Incident history
       </h2>
 
       {groups.length === 0 ? (

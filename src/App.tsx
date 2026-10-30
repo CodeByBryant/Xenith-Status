@@ -31,7 +31,7 @@ function App() {
         <Logo />
         <a
           href={SITE.appUrl}
-          className="rounded-lg border border-border px-3.5 py-1.5 text-sm text-muted transition-colors hover:border-foreground/30 hover:text-foreground"
+          className="rounded-md border border-control bg-elevated px-3.5 py-1.5 text-sm text-foreground transition-colors hover:border-foreground"
         >
           Open {SITE.name}
         </a>
@@ -47,8 +47,8 @@ function App() {
 
         {MAINTENANCE.length > 0 && (
           <section>
-            <h2 className="mb-3 px-1 text-sm font-semibold uppercase tracking-wider text-subtle">
-              Scheduled Maintenance
+            <h2 className="mb-3 px-1 text-[0.8125rem] font-medium text-muted">
+              Scheduled maintenance
             </h2>
             <div className="space-y-4">
               {MAINTENANCE.map((m) => (
