@@ -48,7 +48,7 @@ export function OverallBanner({ status, updatedAt, monitoring, lastSuccessfulChe
             style={{ background: meta.color }}
           />
         </span>
-        <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           {overallHeadline(status)}
         </h1>
       </div>

@@ -175,7 +175,7 @@ export function ComponentList({
 }) {
   return (
     <section>
-      <h2 className="mb-3 px-1 text-sm font-semibold uppercase tracking-wider text-subtle">
+      <h2 className="mb-3 px-1 text-[0.8125rem] font-medium text-muted">
         Systems
       </h2>
       <div className="overflow-hidden rounded-xl border border-border bg-card">
