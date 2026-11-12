@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-12T17:42:31.241Z",
+  "generatedAt": "2026-11-12T22:52:31.643Z",
   "components": {
     "app": {
-      "status": "degraded",
-      "latencyMs": 8177,
-      "lastChecked": "2026-11-12T17:42:17.381Z",
+      "status": "operational",
+      "latencyMs": 241,
+      "lastChecked": "2026-11-12T22:52:27.379Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -632,7 +632,7 @@
         {
           "date": "2026-11-12",
           "status": "degraded",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
@@ -640,8 +640,8 @@
     },
     "auth": {
       "status": "operational",
-      "latencyMs": 659,
-      "lastChecked": "2026-11-12T17:42:18.048Z",
+      "latencyMs": 604,
+      "lastChecked": "2026-11-12T22:52:27.992Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -1269,7 +1269,7 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
@@ -1277,8 +1277,8 @@
     },
     "database": {
       "status": "operational",
-      "latencyMs": 302,
-      "lastChecked": "2026-11-12T17:42:18.350Z",
+      "latencyMs": 438,
+      "lastChecked": "2026-11-12T22:52:28.430Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -1906,16 +1906,16 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
       ]
     },
     "media": {
-      "status": "major",
-      "latencyMs": 3931,
-      "lastChecked": "2026-11-12T17:42:28.354Z",
+      "status": "operational",
+      "latencyMs": 277,
+      "lastChecked": "2026-11-12T22:52:28.707Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -2543,16 +2543,16 @@
         {
           "date": "2026-11-12",
           "status": "major",
-          "checks": 3,
+          "checks": 4,
           "down": 1,
-          "uptime": 66.67
+          "uptime": 75
         }
       ]
     },
     "api": {
       "status": "operational",
-      "latencyMs": 1134,
-      "lastChecked": "2026-11-12T17:42:29.489Z",
+      "latencyMs": 1519,
+      "lastChecked": "2026-11-12T22:52:30.226Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -3180,7 +3180,7 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
@@ -3188,8 +3188,8 @@
     },
     "ai": {
       "status": "operational",
-      "latencyMs": 382,
-      "lastChecked": "2026-11-12T17:42:30.942Z",
+      "latencyMs": 481,
+      "lastChecked": "2026-11-12T22:52:31.225Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -3817,7 +3817,7 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
@@ -3825,8 +3825,8 @@
     },
     "notifications": {
       "status": "operational",
-      "latencyMs": 298,
-      "lastChecked": "2026-11-12T17:42:31.241Z",
+      "latencyMs": 417,
+      "lastChecked": "2026-11-12T22:52:31.643Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -4454,7 +4454,7 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
@@ -4462,8 +4462,8 @@
     },
     "billing": {
       "status": "operational",
-      "latencyMs": 1070,
-      "lastChecked": "2026-11-12T17:42:30.559Z",
+      "latencyMs": 516,
+      "lastChecked": "2026-11-12T22:52:30.743Z",
       "days": [
         {
           "date": "2026-08-15",
@@ -5091,7 +5091,7 @@
         {
           "date": "2026-11-12",
           "status": "operational",
-          "checks": 3,
+          "checks": 4,
           "down": 0,
           "uptime": 100
         }
